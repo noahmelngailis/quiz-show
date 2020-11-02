@@ -6,3 +6,4 @@ __pycache__/
 TxDot_Roadways/
 credentials.json
 token.pickle
+*.zip
