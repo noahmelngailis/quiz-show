@@ -12,6 +12,9 @@ def get_data():
     
     df.columns = [i.replace(" ", "_") for i in df.columns]
     
+    # filter out questions with links
+    df = df[df.question.str.contains('href')]
+    
     return df
 
 df = get_data()
@@ -39,3 +42,21 @@ def quiz_round():
     
     for i in question_list:
         answer(i)
+        
+
+def get_all_questions_from_a_category(category):
+    
+    x = len(df[df.category == category].index)
+    
+    print(f"This round will be {x} questions long do you want to continue?")
+    
+    q = input()
+    
+    if q == 'y':
+        for i in df[df.category == category].question.index:
+            print(df.air_date[i] + " \\ " + df.question[i])
+            time.sleep(2)
+            input()
+      
+        for i in df[df.category == category].question.index:
+            print(df.answer[i])
