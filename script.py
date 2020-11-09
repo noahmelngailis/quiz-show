@@ -3,18 +3,25 @@ import numpy as np
 import time
 
 def get_data():
+    """This function acquires data from csv and turns into df"""
     
     df = pd.read_csv("JEOPARDY_CSV.csv")
-    
+
     df.columns = df.columns.str.strip(" ")
-    
+
     df.columns = [i.lower() for i in df.columns]
-    
+
     df.columns = [i.replace(" ", "_") for i in df.columns]
     
-    # filter out questions with links
-    df = df[df.question.str.contains('href')]
+    # pulls out any question with a link
+    df[~df.question.str.contains('href')]
     
+    
+    df.value = (df.value.str.replace('$', "")
+                    .str.replace(',',"")
+                    .str.replace('None', "10000")
+                    .astype('float')
+               )
     return df
 
 df = get_data()
@@ -30,18 +37,18 @@ def answer(i):
     print(df.answer[i])
 
 def quiz_round():
-    
+
     question_list = make_random_list(8)
-    
+
     for i in question_list:
         question(i)
         time.sleep(3)
         input()
-        
+
     input()
-    
+
     for i in question_list:
-        answer(i)
+        answer(i) 
         
 
 def get_all_questions_from_a_category(category):
