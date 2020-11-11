@@ -27,7 +27,7 @@ def get_data():
 df = get_data()
 
 def question(i):
-    print(df.air_date[i] + " \\ " + df.category[i] + " \\ " + df.value[i] + ":  " + df.question[i])
+    print(df.air_date[i] + " \\ " + df.category[i] + " \\ " + df.value[i].astype(str) + ":  " + df.question[i])
 
 def make_random_list(n):
     question_list = np.random.randint(0, len(df), n)
